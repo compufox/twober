@@ -1,0 +1,153 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/settings_dialog.gd" type="Script" id=1]
+
+[node name="SettingsDialog" type="WindowDialog"]
+margin_right = 464.0
+margin_bottom = 511.0
+window_title = "Settings"
+resizable = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ScrollContainer" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="BackgroundSettings" type="VBoxContainer" parent="TabContainer/Background"]
+margin_right = 456.0
+margin_bottom = 475.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="colorSettings" type="HBoxContainer" parent="TabContainer/Background/BackgroundSettings"]
+margin_right = 426.0
+margin_bottom = 438.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TabContainer/Background/BackgroundSettings/colorSettings"]
+margin_top = 212.0
+margin_right = 114.0
+margin_bottom = 226.0
+text = "Background color:"
+
+[node name="ColorPicker" type="ColorPicker" parent="TabContainer/Background/BackgroundSettings/colorSettings"]
+margin_left = 122.0
+margin_top = 4.0
+margin_right = 430.0
+margin_bottom = 442.0
+color = Color( 0, 1, 0.0627451, 1 )
+edit_alpha = false
+
+[node name="Avatar" type="ScrollContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="AvatarSettings" type="VBoxContainer" parent="TabContainer/Avatar"]
+margin_right = 456.0
+margin_bottom = 475.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="IdleSettings" type="HBoxContainer" parent="TabContainer/Avatar/AvatarSettings"]
+margin_right = 115.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Avatar/AvatarSettings/IdleSettings"]
+margin_top = 3.0
+margin_right = 29.0
+margin_bottom = 17.0
+text = "Idle:"
+
+[node name="Button" type="Button" parent="TabContainer/Avatar/AvatarSettings/IdleSettings"]
+margin_left = 33.0
+margin_right = 92.0
+margin_bottom = 20.0
+text = "Choose"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IdlePreview" type="TextureRect" parent="TabContainer/Avatar/AvatarSettings/IdleSettings"]
+margin_left = 96.0
+margin_right = 96.0
+margin_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand = true
+stretch_mode = 6
+
+[node name="TalkingSettings" type="HBoxContainer" parent="TabContainer/Avatar/AvatarSettings"]
+margin_top = 24.0
+margin_right = 115.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Avatar/AvatarSettings/TalkingSettings"]
+margin_top = 3.0
+margin_right = 48.0
+margin_bottom = 17.0
+text = "Talking:"
+
+[node name="Button" type="Button" parent="TabContainer/Avatar/AvatarSettings/TalkingSettings"]
+margin_left = 52.0
+margin_right = 111.0
+margin_bottom = 20.0
+text = "Choose"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TalkingPreview" type="TextureRect" parent="TabContainer/Avatar/AvatarSettings/TalkingSettings"]
+margin_left = 115.0
+margin_right = 115.0
+margin_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 6
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 315.0
+margin_bottom = 130.0
+popup_exclusive = true
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2
+current_dir = "/Documents/GodotProjects/Tuber"
+current_path = "/Documents/GodotProjects/Tuber/"
+
+[connection signal="settings_updated" from="." to="." method="_on_settings_updated"]
+[connection signal="color_changed" from="TabContainer/Background/BackgroundSettings/colorSettings/ColorPicker" to="." method="_on_background_color_changed"]
+[connection signal="pressed" from="TabContainer/Avatar/AvatarSettings/IdleSettings/Button" to="." method="_on_choose_btn_pressed" binds= [ "idle" ]]
+[connection signal="pressed" from="TabContainer/Avatar/AvatarSettings/TalkingSettings/Button" to="." method="_on_choose_btn_pressed" binds= [ "active" ]]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
