@@ -6,6 +6,8 @@ var active: bool = false
 var activation_energy = 0.4
 var idleTexture: Texture
 var activeTexture: Texture
+var current = 0.0
+var spectrum_delay = 0.05
 onready var tween = $tween
 
 signal talking(is_talking)
@@ -31,7 +33,7 @@ func _ready():
 	var idx = AudioServer.get_bus_index("mic")
 	mic = AudioServer.get_bus_effect(idx, 0)
 	spectrum = AudioServer.get_bus_effect(idx, 1)
-	spectrum.set_buffer_length(0.5)
+	spectrum.set_buffer_length(spectrum_delay)
 	
 	spectrum = AudioServer.get_bus_effect_instance(idx, 1)
 	mic.set_recording_active(true)
@@ -40,19 +42,19 @@ func _input(_event):
 	if Input.is_action_pressed("open_settings"):
 		$SettingsDialog.popup_centered()
 
-func _process(_delta):
-	var prev_hz = 0
-	for i in range(1, 17):
-		var hz = i * 11050.0 / 16
-		var magnitude = spectrum.get_magnitude_for_frequency_range(prev_hz, hz).length()
+func _process(delta):
+	current += delta
+	
+	if current >= spectrum_delay:
+		current = 0
+		var magnitude = spectrum.get_magnitude_for_frequency_range(0, (17 * 11050.0) / 16).length()
 		var energy = clamp((60 + linear2db(magnitude)) / 60, 0, 1)
 		if energy > activation_energy and not active:
 			active = true
-			emit_signal("talking", true)
-			break
 		elif energy < activation_energy and active:
 			active = false
-			emit_signal("talking", false)
+	
+		emit_signal("talking", active)
 
 func hide_text_after_timer():
 	yield(get_tree().create_timer(30), "timeout")
