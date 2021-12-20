@@ -19,8 +19,13 @@ func _ready():
 	if not OptionsController.get("hide_help"):
 		hide_text_after_timer()
 	
-	idleTexture = OptionsController.texture_from_image(OptionsController.get("idle_img"))
-	activeTexture = OptionsController.texture_from_image(OptionsController.get("active_img"))
+	if OptionsController.get("idle_img").begins_with("res"):
+		idleTexture = $face.texture
+		activeTexture = $face.texture
+	else:
+		idleTexture = OptionsController.texture_from_image(OptionsController.get("idle_img"))
+		activeTexture = OptionsController.texture_from_image(OptionsController.get("active_img"))
+	
 	$face.texture = idleTexture
 	
 	var idx = AudioServer.get_bus_index("mic")
@@ -58,9 +63,11 @@ func _on_settings_updated(name, new_value):
 	if name == "bg_color":
 		$greenScreen.color = Color(new_value)
 	elif name == "idle_img":
-		idleTexture = OptionsController.texture_from_image(OptionsController.get("idle_img"))
+		idleTexture = OptionsController.texture_from_image(new_value)
+		_on_talking(active)
 	elif name == "active_img":
-		activeTexture = OptionsController.texture_from_image(OptionsController.get("active_img"))
+		activeTexture = OptionsController.texture_from_image(new_value)
+		_on_talking(active)
 	elif name == "hide_help":
 		$helpText.visible = not new_value
 	elif name == "threshold_amt":

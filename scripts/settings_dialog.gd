@@ -30,12 +30,10 @@ func _on_choose_btn_pressed(which):
 func _on_FileDialog_file_selected(path):
 	## Update preview textures/paths in settings
 	if selection_type == "idle":
-		OptionsController.load_texture_onto_node($TabContainer/Avatar/AvatarSettings/IdlePreview,
-												path)
+		$TabContainer/Avatar/AvatarSettings/IdlePreview.texture = OptionsController.texture_from_image(path)
 		$TabContainer/Avatar/AvatarSettings/IdleSettings/idlePath.text = path
 	else:
-		OptionsController.load_texture_onto_node($TabContainer/Avatar/AvatarSettings/TalkingPreview,
-												path)
+		$TabContainer/Avatar/AvatarSettings/TalkingPreview.texture = OptionsController.texture_from_image(path)
 		$TabContainer/Avatar/AvatarSettings/TalkingSettings/talkingPath.text = path
 		
 	
