@@ -55,7 +55,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tween" type="Tween" parent="."]
-
 [connection signal="talking" from="." to="." method="_on_talking"]
 [connection signal="settings_updated" from="SettingsDialog" to="." method="_on_settings_updated"]
