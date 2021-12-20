@@ -10,13 +10,17 @@ config_version=4
 
 [application]
 
-config/name="Tuber"
+config/name="Twober"
 run/main_scene="res://_scenes/main_ui.tscn"
 config/icon="res://icon.png"
 
 [audio]
 
 enable_audio_input=true
+
+[autoload]
+
+OptionsController="*res://scripts/options_controller.gd"
 
 [input]
 

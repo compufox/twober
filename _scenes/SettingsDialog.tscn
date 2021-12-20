@@ -23,6 +23,7 @@ __meta__ = {
 }
 
 [node name="Background" type="ScrollContainer" parent="TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -34,33 +35,60 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="BackgroundSettings" type="VBoxContainer" parent="TabContainer/Background"]
-margin_right = 456.0
+margin_right = 426.0
+margin_bottom = 475.0
+size_flags_horizontal = 5
+size_flags_vertical = 3
+
+[node name="helpOptions" type="HBoxContainer" parent="TabContainer/Background/BackgroundSettings"]
+margin_right = 426.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Background/BackgroundSettings/helpOptions"]
+margin_top = 5.0
+margin_right = 398.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Hide help text on startup?"
+
+[node name="hideHelp" type="CheckBox" parent="TabContainer/Background/BackgroundSettings/helpOptions"]
+margin_left = 402.0
+margin_right = 426.0
+margin_bottom = 24.0
+
+[node name="colorSettings" type="HBoxContainer" parent="TabContainer/Background/BackgroundSettings"]
+margin_top = 28.0
+margin_right = 426.0
 margin_bottom = 475.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="colorSettings" type="HBoxContainer" parent="TabContainer/Background/BackgroundSettings"]
-margin_right = 426.0
-margin_bottom = 438.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
 [node name="Label" type="Label" parent="TabContainer/Background/BackgroundSettings/colorSettings"]
-margin_top = 212.0
 margin_right = 114.0
-margin_bottom = 226.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
 text = "Background color:"
 
+[node name="colorPreview" type="ColorRect" parent="TabContainer/Background/BackgroundSettings/colorSettings"]
+visible = false
+margin_left = 118.0
+margin_right = 194.0
+margin_bottom = 447.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ColorPicker" type="ColorPicker" parent="TabContainer/Background/BackgroundSettings/colorSettings"]
-margin_left = 122.0
-margin_top = 4.0
-margin_right = 430.0
-margin_bottom = 442.0
+margin_left = 118.0
+margin_right = 426.0
+margin_bottom = 447.0
 color = Color( 0, 1, 0.0627451, 1 )
 edit_alpha = false
 
 [node name="Avatar" type="ScrollContainer" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -78,7 +106,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="IdleSettings" type="HBoxContainer" parent="TabContainer/Avatar/AvatarSettings"]
-margin_right = 115.0
+margin_right = 456.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
@@ -97,19 +125,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IdlePreview" type="TextureRect" parent="TabContainer/Avatar/AvatarSettings/IdleSettings"]
+[node name="idlePath" type="Label" parent="TabContainer/Avatar/AvatarSettings/IdleSettings"]
 margin_left = 96.0
+margin_top = 3.0
 margin_right = 96.0
-margin_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IdlePreview" type="TextureRect" parent="TabContainer/Avatar/AvatarSettings"]
+margin_top = 24.0
+margin_right = 456.0
+margin_bottom = 207.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 expand = true
 stretch_mode = 6
 
 [node name="TalkingSettings" type="HBoxContainer" parent="TabContainer/Avatar/AvatarSettings"]
-margin_top = 24.0
-margin_right = 115.0
-margin_bottom = 44.0
+margin_top = 211.0
+margin_right = 456.0
+margin_bottom = 231.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="TabContainer/Avatar/AvatarSettings/TalkingSettings"]
@@ -127,13 +164,99 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TalkingPreview" type="TextureRect" parent="TabContainer/Avatar/AvatarSettings/TalkingSettings"]
+[node name="talkingPath" type="Label" parent="TabContainer/Avatar/AvatarSettings/TalkingSettings"]
 margin_left = 115.0
+margin_top = 3.0
 margin_right = 115.0
-margin_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+margin_bottom = 17.0
+
+[node name="TalkingPreview" type="TextureRect" parent="TabContainer/Avatar/AvatarSettings"]
+margin_top = 235.0
+margin_right = 456.0
+margin_bottom = 419.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
 stretch_mode = 6
+
+[node name="FlipH" type="HBoxContainer" parent="TabContainer/Avatar/AvatarSettings"]
+margin_top = 423.0
+margin_right = 456.0
+margin_bottom = 447.0
+
+[node name="Label" type="Label" parent="TabContainer/Avatar/AvatarSettings/FlipH"]
+margin_top = 5.0
+margin_right = 428.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Flip Horizontally:"
+
+[node name="flipHbox" type="CheckBox" parent="TabContainer/Avatar/AvatarSettings/FlipH"]
+margin_left = 432.0
+margin_right = 456.0
+margin_bottom = 24.0
+
+[node name="FlipV" type="HBoxContainer" parent="TabContainer/Avatar/AvatarSettings"]
+margin_top = 451.0
+margin_right = 456.0
+margin_bottom = 475.0
+
+[node name="Label" type="Label" parent="TabContainer/Avatar/AvatarSettings/FlipV"]
+margin_top = 5.0
+margin_right = 428.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Flip Vertically:"
+
+[node name="flipVbox" type="CheckBox" parent="TabContainer/Avatar/AvatarSettings/FlipV"]
+margin_left = 432.0
+margin_right = 456.0
+margin_bottom = 24.0
+
+[node name="Voice" type="ScrollContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -420.0
+margin_bottom = -439.0
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Voice"]
+margin_right = 179.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="thresholdSettings" type="HBoxContainer" parent="TabContainer/Voice/VBoxContainer"]
+margin_right = 179.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TabContainer/Voice/VBoxContainer/thresholdSettings"]
+margin_right = 135.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Activation Threshold:"
+
+[node name="HSlider" type="HSlider" parent="TabContainer/Voice/VBoxContainer/thresholdSettings"]
+margin_left = 139.0
+margin_right = 155.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 40.0
+tick_count = 4
+
+[node name="Label2" type="Label" parent="TabContainer/Voice/VBoxContainer/thresholdSettings"]
+margin_left = 159.0
+margin_right = 179.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "0%"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_right = 315.0
@@ -146,8 +269,15 @@ access = 2
 current_dir = "/Documents/GodotProjects/Tuber"
 current_path = "/Documents/GodotProjects/Tuber/"
 
+[connection signal="about_to_show" from="." to="." method="_on_about_to_show"]
 [connection signal="settings_updated" from="." to="." method="_on_settings_updated"]
+[connection signal="toggled" from="TabContainer/Background/BackgroundSettings/helpOptions/hideHelp" to="." method="_on_hideHelp_toggled"]
 [connection signal="color_changed" from="TabContainer/Background/BackgroundSettings/colorSettings/ColorPicker" to="." method="_on_background_color_changed"]
+[connection signal="preset_added" from="TabContainer/Background/BackgroundSettings/colorSettings/ColorPicker" to="." method="_on_presets_changed"]
+[connection signal="preset_removed" from="TabContainer/Background/BackgroundSettings/colorSettings/ColorPicker" to="." method="_on_presets_changed"]
 [connection signal="pressed" from="TabContainer/Avatar/AvatarSettings/IdleSettings/Button" to="." method="_on_choose_btn_pressed" binds= [ "idle" ]]
 [connection signal="pressed" from="TabContainer/Avatar/AvatarSettings/TalkingSettings/Button" to="." method="_on_choose_btn_pressed" binds= [ "active" ]]
+[connection signal="toggled" from="TabContainer/Avatar/AvatarSettings/FlipH/flipHbox" to="." method="_on_flipHbox_toggled"]
+[connection signal="toggled" from="TabContainer/Avatar/AvatarSettings/FlipV/flipVbox" to="." method="_on_flipVbox_toggled"]
+[connection signal="value_changed" from="TabContainer/Voice/VBoxContainer/thresholdSettings/HSlider" to="." method="_on_threshold_value_changed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

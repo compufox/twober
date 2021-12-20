@@ -3,12 +3,26 @@ extends Control
 var mic
 var spectrum
 var active: bool = false
-export var activation_energy = 0.4
+var activation_energy = 0.4
+var idleTexture: Texture
+var activeTexture: Texture
+onready var tween = $tween
 
 signal talking(is_talking)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	OptionsController.load_options()
+	for k in OptionsController.keys():
+		_on_settings_updated(k, OptionsController.get(k))
+	
+	if not OptionsController.get("hide_help"):
+		hide_text_after_timer()
+	
+	idleTexture = OptionsController.texture_from_image(OptionsController.get("idle_img"))
+	activeTexture = OptionsController.texture_from_image(OptionsController.get("active_img"))
+	$face.texture = idleTexture
+	
 	var idx = AudioServer.get_bus_index("mic")
 	mic = AudioServer.get_bus_effect(idx, 0)
 	spectrum = AudioServer.get_bus_effect(idx, 1)
@@ -17,11 +31,11 @@ func _ready():
 	spectrum = AudioServer.get_bus_effect_instance(idx, 1)
 	mic.set_recording_active(true)
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_pressed("open_settings"):
 		$SettingsDialog.popup_centered()
 
-func _process(delta):
+func _process(_delta):
 	var prev_hz = 0
 	for i in range(1, 17):
 		var hz = i * 11050.0 / 16
@@ -30,27 +44,35 @@ func _process(delta):
 		if energy > activation_energy and not active:
 			active = true
 			emit_signal("talking", true)
+			break
 		elif energy < activation_energy and active:
 			active = false
 			emit_signal("talking", false)
 
+func hide_text_after_timer():
+	yield(get_tree().create_timer(30), "timeout")
+	$helpText.visible = false
 
 # catch settings when they get updated
 func _on_settings_updated(name, new_value):
 	if name == "bg_color":
-		$greenScreen.color = new_value
+		$greenScreen.color = Color(new_value)
 	elif name == "idle_img":
-		var new_texture = ImageTexture.new()
-		var image = Image.new()
-		image.load(new_value)
-		new_texture.create_from_image(image)
-		$idleFace.texture = new_texture
+		idleTexture = OptionsController.texture_from_image(OptionsController.get("idle_img"))
+	elif name == "active_img":
+		activeTexture = OptionsController.texture_from_image(OptionsController.get("active_img"))
+	elif name == "hide_help":
+		$helpText.visible = not new_value
+	elif name == "threshold_amt":
+		activation_energy = (new_value / 100)
+	elif name == "flip_h":
+		$face.flip_h = new_value
+	elif name == "flip_v":
+		$face.flip_v = new_value
 
 
 func _on_talking(is_talking):
 	if is_talking:
-		$idleFace.visible = false
-		$activeFace.visible = true
+		$face.texture = activeTexture
 	else:
-		$idleFace.visible = true
-		$activeFace.visible = false
+		$face.texture = idleTexture
